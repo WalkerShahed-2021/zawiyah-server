@@ -19,7 +19,7 @@ app.use(cors());
 app.use("/user", userRouter);
 app.use("/question", questionRouter);
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 80
 
 
 mongoose.connect(key.mongoURI) 
