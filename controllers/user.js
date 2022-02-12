@@ -23,14 +23,15 @@ export const createUser = async (req, res)=>{
 }
 
 export const updateUser = async (req, res)=>{
-    console.log("yes")
-    
+    console.log("update user function")    
     const us = req.body;
+    const id = us._id
+    var query = {'_id': id};
     const newUser = user(us);
     newUser.password = newUser.generateHash(us.password)
-    
+    // user.findOneAndUpdate
     try{
-        await newUser.updateOne();
+        await user.findOneAndUpdate(query, newUser, {upsert : true});
         res.status(201).json(newUser);
     } catch(err){
         res.status(409).json({message: err.message});
@@ -73,7 +74,8 @@ export const loginUser =  async (req, res)=>{
     }   
 }
 export const getUser =  async (req, res)=>{
-    const id = req.params.id;
+    const id = req.body.id;
+    console.log("getting single user", id)
     try{
         const us = await user.findById(id);
         res.status(200).json(us);
@@ -84,10 +86,10 @@ export const getUser =  async (req, res)=>{
 }
 
 export const deleteUser = async (req, res)=>{
-    const id = req.params.email;
+    const id = req.body._id;
     console.log(id)
     try{
-        await user.find({email:id}).remove().exec();
+        await user.find({_id:id}).deleteOne();
         res.status(201).json({message: "successfully deleted"});
     } catch(err){
         res.status(409).json({message: err.message});
