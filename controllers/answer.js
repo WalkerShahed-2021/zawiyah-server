@@ -15,8 +15,13 @@ export const getUserAnswer = async (req, res)=>{
 export const addUserAnswer = async (req, res)=>{    
     const newAns = answer(req.body);
     try{
-        await newAns.save();
-        res.status(201).json(newAns);
+        try{
+            await answer.find({uid:newAns.uid, qid:newAns.qid, date:newAns.date}).deleteOne();
+        }
+        finally{
+            await newAns.save();
+            res.status(201).json(newAns);
+        }
     } catch(err){
         res.status(409).json({message: err.message});
     }

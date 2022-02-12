@@ -15,6 +15,6 @@ const answerSchema = mongoose.Schema({
         default: false
     }
 });
-
+answerSchema.index({'qid': 1, 'uid': 1, 'date': 1}, {unique: true});
 const answer = mongoose.model("answer", answerSchema);
 export default answer;
