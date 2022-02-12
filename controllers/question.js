@@ -13,7 +13,7 @@ export const getQuestionsByLevel = async (req, res)=>{
     const level = req.body.level;
     console.log(level)
     try{
-        const ques = await question.find({"level":level});
+        const ques = await question.find({"level":level, isDeleted:false});
         res.status(200).json(ques);
     }
     catch (error){
@@ -25,7 +25,7 @@ export const deleteQuestion = async (req, res)=>{
     const id = req.body.id;
     console.log(id)
     try{
-        await question.find({_id:id}).deleteOne();
+        await question.findOneAndUpdate({_id:id}, {isDeleted:true}, {upsert : true});
         res.status(201).json({message: "successfully deleted"});
     } catch(err){
         res.status(409).json({message: err.message});
@@ -35,7 +35,7 @@ export const deleteQuestion = async (req, res)=>{
 export const getAllQuestions = async (req, res)=>{  
     console.log("called all questions")  
     try{
-        const ques = await question.find();
+        const ques = await question.find({isDeleted:false});
         res.status(200).json(ques);
     }
     catch (error){
