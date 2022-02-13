@@ -64,7 +64,7 @@ export const loginUser =  async (req, res)=>{
                 if (!us.validPassword(req.body.password)) {
                     res.status(404).json({message: "failed"});
                 } else {
-                    res.status(200).json({message: "success"});
+                    res.status(200).json({message: "success", user : us});
                 }
             }
             else{
