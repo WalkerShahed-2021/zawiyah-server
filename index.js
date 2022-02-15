@@ -6,6 +6,7 @@ import key  from "./config/keys.js";
 import userRouter from './routes/user.js'
 import questionRouter from './routes/question.js'
 import answerRouter from './routes/answer.js'
+import videoRouter from './routes/landing_video.js'
 
 // import { deleteUser } from "./controllers/user.js";
 
@@ -20,6 +21,7 @@ app.use(cors());
 app.use("/user", userRouter);
 app.use("/question", questionRouter);
 app.use("/answer", answerRouter);
+app.use("/video", videoRouter);
 
 const port = process.env.PORT || 5000
 
