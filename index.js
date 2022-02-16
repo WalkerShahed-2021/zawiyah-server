@@ -7,6 +7,7 @@ import userRouter from './routes/user.js'
 import questionRouter from './routes/question.js'
 import answerRouter from './routes/answer.js'
 import videoRouter from './routes/landing_video.js'
+import levelRequestRouter from './routes/level_request.js'
 
 // import { deleteUser } from "./controllers/user.js";
 
@@ -22,6 +23,7 @@ app.use("/user", userRouter);
 app.use("/question", questionRouter);
 app.use("/answer", answerRouter);
 app.use("/video", videoRouter);
+app.use("/request", levelRequestRouter);
 
 const port = process.env.PORT || 5000
 

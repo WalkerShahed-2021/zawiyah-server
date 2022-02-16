@@ -12,17 +12,24 @@ export const getUserAnswer = async (req, res)=>{
         res.status(404).json({message : error.message})
     }
 }
-export const addUserAnswer = async (req, res)=>{    
-    const newAns = answer(req.body);
-    try{
+export const addUserAnswer = async (req, res)=>{  
+    const dt = req.body
+    // var arr = JSON.parse(dt);
+    for(var i = 0; i < dt.length; i++)
+    {
+        const newAns = answer(dt[i]);
         try{
-            await answer.find({uid:newAns.uid, qid:newAns.qid, date:newAns.date}).deleteOne();
+            try{
+                await answer.find({uid:newAns.uid, qid:newAns.qid, date:newAns.date}).deleteOne();
+            }
+            finally{
+                await newAns.save();
+                // console.log("successfully saved")                
+            }
+        } catch(err){
+            res.status(409).json({message: err.message});
+            return;
         }
-        finally{
-            await newAns.save();
-            res.status(201).json(newAns);
-        }
-    } catch(err){
-        res.status(409).json({message: err.message});
-    }
+    } 
+    res.status(201).json({message: "Successfully added"});
 }
