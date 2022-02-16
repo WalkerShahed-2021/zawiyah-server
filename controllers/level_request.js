@@ -21,13 +21,13 @@ export const getLevelChangeRequests = async (req, res)=>{
 }
 export const processLevelChangeRequest = async (req, res)=>{    
     const stat = req.body.status;
+    console.log(stat)
     try{
         if (stat == true) {
             // update user status
             const requ = await level_request.find({'_id': req.body.request_id})
-            console.log(requ)
-            await user.findOneAndUpdate({'_id' : requ.uid},
-            {'level':requ.d_level}, {upsert: true}
+            await user.findOneAndUpdate({'_id' : requ[0].uid},
+            {"level":requ[0].d_level}, {upsert: true}
             );
 
         }
