@@ -8,7 +8,6 @@ NOTE:
     This function return either true or false
 */
 
-
 export const createUser = async (req, res)=>{
     const us = req.body;
     const newUser = user(us);
